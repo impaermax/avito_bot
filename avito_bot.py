@@ -1,4 +1,5 @@
 import requests
+import time
 import telebot
 import json
 import sqlite3
@@ -147,7 +148,7 @@ def get_neuro_response(chat_id, user_message, ad_id, ad_title, ad_description):
     history = get_chat_history(chat_id)
     prompt = get_prompt(ad_id, ad_title, ad_description)
     messages = [{"role": "system", "content": prompt}] + history + [{"role": "user", "content": user_message}]
-    data = {"model": "gpt-4o-mini", "messages": messages}
+    data = {"model": "gpt-4o", "messages": messages}
     response = requests.post(NEURO_API_URL, headers=headers, json=data)
     if response.status_code != 200:
         print(f"Ошибка нейросети: {response.status_code}, {response.text}")
@@ -300,6 +301,7 @@ def find_chat_by_user_id(token, user_id_avito, target_user_id):
 
 # Инициализация
 init_db()
+filtered_item_ids = None
 
 # Настройка вебхука при запуске
 token = get_avito_token()
