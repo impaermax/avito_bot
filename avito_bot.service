@@ -1,0 +1,10 @@
+[Unit]
+Description=Avito Bot
+After=network.target
+[Service]
+User=root
+WorkingDirectory=/root/avito_bot
+ExecStart=/usr/local/bin/gunicorn --bind 0.0.0.0:5000 avito_bot:app
+Restart=always
+[Install]
+WantedBy=multi-user.target
